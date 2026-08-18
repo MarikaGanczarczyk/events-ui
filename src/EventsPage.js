@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
+import { Button } from 'primereact/button';
 
 const EventsPage = () => {
 const [events, setEvents] =useState("")
@@ -13,9 +14,20 @@ fetch('http://localhost:3001/events')
 .catch((err)=>console.log(err.message))
 },[])
 
+const actionBodyTemplate = () => {
+return (
+<Button icon="pi pi-ellipsis-v" className='action-btn'
+/>
+);
+};
+
   return (
     <div className='container'>
-<h2>Events</h2>
+ <div className="page-header">
+        <h2>Events Dashboard</h2>
+        <p className="page-subtitle">Search and manage events</p>
+      </div>
+
 <div className='table-container'>
 <DataTable value={events}>
 <Column field="eventtype" header="Event Type"/>
@@ -25,6 +37,7 @@ fetch('http://localhost:3001/events')
 <Column field="isactive" header="Active" />
 <Column field="criticalevent" header="Critical" />
 <Column field="isreusable" header="Reusable" />
+<Column header="Actions" body={actionBodyTemplate} />
 </DataTable>
 
 </div>

@@ -8,6 +8,13 @@ body {
     padding: 40px;
 }
 
+.container h2 {
+    color: #1F2937;
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
 .table-container {
     background: white;
     border: 1px solid #d4d4d4;
@@ -15,11 +22,26 @@ body {
     padding: 30px;
     min-height: 500px;
 }
-.container h2 {
-    color: #1F2937;
-    font-size: 36px;
-font-weight: 700;
-margin-bottom: 24px;
+
+/* Action  */
+.action-btn {
+    background: transparent;
+    border: 1px solid #d4d4d4;
+    color: #6B7280;
+    border-radius: 6px;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+}
+
+.action-btn:hover {
+    background: #F9FAFB;
+}
+
+
+.p-datatable table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
 .p-datatable {
@@ -29,19 +51,33 @@ margin-bottom: 24px;
 .p-datatable .p-datatable-thead > tr > th {
     background: white;
     color: #6B7280;
-    font-size: 15px;
-    font-weight: 500;
-    border-bottom: 1px solid #d9d9d9;
-    padding: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: left;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 12px 16px;
 }
 
 .p-datatable .p-datatable-tbody > tr > td {
     background: white;
     border-bottom: 1px solid #ececec;
-    padding: 12px;
+    padding: 14px 16px;
     color: #111827;
+    font-size: 14px;
+}
+
+.p-datatable .p-datatable-tbody > tr:last-child > td {
+    border-bottom: none;
 }
 
 .p-datatable .p-datatable-tbody > tr:hover {
     background: #fafafa;
+}
+.p-button {
+    background: #848b97;
+    border-color: #848b97;
+}
+
+.p-button:hover {
+    background: #37485f;
 }
