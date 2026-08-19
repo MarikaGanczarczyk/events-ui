@@ -74,10 +74,65 @@ body {
     background: #fafafa;
 }
 .p-button {
-    background: #848b97;
-    border-color: #848b97;
+    background: #fafafa;
+    border-color: #fafafa;
 }
 
 .p-button:hover {
-    background: #37485f;
+    background: #ced4dd;
+}
+.search-container {
+    display: flex;
+    gap: 12px;
+}
+
+.dropdown-filter {
+    width: 180px;
+}
+
+.p-input-icon-left {
+    position: relative;
+    
+
+}
+.p-input-icon-left .pi-search {
+    color: #6b7280;
+    left: 12px;
+}
+
+.p-input-icon-left .p-inputtext {
+    width: 500px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    transition: all 0.2s ease;
+    padding-left: 35px;
+}
+
+.p-input-icon-left .p-inputtext:hover {
+    border-color: #93c5fd;
+}
+
+.p-input-icon-left .p-inputtext:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+.search-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px ;
+}
+.new-event-btn {
+margin-left: auto;
+background: #2563EB;
+border: 1px solid #2563EB;
+border-radius: 8px;
+color: white;
+font-size: 14px;
+font-weight: 500;
+padding: 12px 30px;
+}
+
+.new-event-btn:hover {
+background: #1D4ED8;
 }
