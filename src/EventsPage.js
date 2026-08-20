@@ -6,7 +6,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
         
 const EventsPage = () => {
-const [events, setEvents] =useState("")
+const [events, setEvents] =useState([])
 
 const [selectedStatus, setSelectedStatus] = useState(null);
 const [selectedCriticality, setSelectedCriticality] = useState(null);
@@ -39,7 +39,7 @@ return (
   return (
     <div className='container'>
  <div className="page-header">
-        <h2>Events Dashboard</h2>
+        <h2>Events </h2>
         <p className="page-subtitle">Search and manage events</p>
       </div>
       
