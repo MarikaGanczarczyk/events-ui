@@ -6,6 +6,7 @@ import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
 
 import CreateEvent from "./CreateEvent";
+import { useNavigate } from "react-router-dom";
 
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
@@ -38,6 +39,9 @@ const EventsPage = () => {
     return <Button icon="pi pi-ellipsis-v" className="action-btn" />;
   };
 
+
+
+  const navigate = useNavigate();
   return (
     <div className="container">
       <div className="page-header">
@@ -76,7 +80,7 @@ const EventsPage = () => {
       </div>
 
       <div className="table-container">
-        <DataTable value={events}>
+        <DataTable value={events} className="events-table" onRowClick={(e) => navigate(`/events/${e.data.eventtype}`)}>
           <Column field="eventtype" header="Event Type" />
           <Column field="eventdescription" header="Description" />
           <Column field="eventowner" header="Owner" />
