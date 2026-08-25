@@ -1,0 +1,85 @@
+
+.p-dialog .p-dialog-content {
+  padding: 1.5rem 2rem;
+}
+
+
+.form-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.1rem;
+}
+
+.form-field label {
+  width: 110px;
+  flex-shrink: 0;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.form-field .p-inputtext,
+.form-field .p-inputtextarea,
+.form-field .p-dropdown {
+  flex: 1;
+  width: 100%;
+}
+
+.form-field .p-dropdown {
+  min-height: 42px;
+}
+
+
+.form-field-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+  margin-left: 110px; 
+}
+
+.form-field-checkbox label {
+  font-size: 0.9rem;
+  color: #374151;
+  cursor: pointer;
+}
+
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+
+
+.new-event-btn {
+margin-left: auto;
+background: #2563EB;
+border: 1px solid #2563EB;
+border-radius: 8px;
+color: white;
+font-size: 14px;
+font-weight: 500;
+padding: 12px 30px;
+}
+
+.new-event-btn:hover {
+background: #1D4ED8;
+}
+.cancel-btn{
+    margin-left: auto;
+background: #bd5d5d;
+border: 1px solid #bd5d5d;
+border-radius: 8px;
+color: white;
+font-size: 14px;
+font-weight: 500;
+padding: 12px 30px;
+}
+.cancel-btn:hover{
+background: #753a3a;
+}

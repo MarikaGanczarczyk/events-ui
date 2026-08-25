@@ -39,7 +39,9 @@ const EventsPage = () => {
     return <Button icon="pi pi-ellipsis-v" className="action-btn" />;
   };
 
-
+const handleEventCreated = (created) => {
+  setEvents((prev) => [...prev, created]);
+};
 
   const navigate = useNavigate();
   return (
@@ -74,7 +76,7 @@ const EventsPage = () => {
         />
         <div>
           <div>
-            <CreateEvent />
+            <CreateEvent onEventCreated={handleEventCreated}/>
           </div>
         </div>
       </div>
