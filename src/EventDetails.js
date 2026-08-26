@@ -65,6 +65,13 @@ const EventDetails = () => {
 
   return (
     <div className="container">
+      <Button
+        label="Back"
+        icon="pi pi-arrow-left"
+        className="back-btn"
+        text
+        onClick={() => navigate(-1)}
+      />
       <div className="details-card">
         <div className="details-header">
           <h2>Event details</h2>
