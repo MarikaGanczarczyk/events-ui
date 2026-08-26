@@ -1,0 +1,136 @@
+/* EventDetail.css */
+.details-status {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.details-card {
+    background: white;
+    border: 1px solid #d4d4d4;
+    border-radius: 7px;
+    padding: 30px;
+    min-height: 500px;
+}
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+}
+
+.details-header h2 {
+    color: #1F2937;
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.details-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn {
+    border-color: #d1d5db;
+    color: #1F2937;
+}
+
+.delete-btn {
+    border-color: #dc2626;
+    color: #dc2626;
+}
+
+.details-title {
+    color: #6c757d;
+    font-size: 14px;
+    margin: 0 0 20px 0;
+}
+
+.details-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.details-tags .p-tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 6px 12px;
+    border-radius: 6px;
+}
+
+.tag-enabled {
+    background: #dcfce7 !important;
+    color: #15803d !important;
+}
+
+.tag-priority {
+    background: #ffedd5 !important;
+    color: #c2410c !important;
+}
+
+.tag-neutral {
+    background: #f3f4f6 !important;
+    color: #374151 !important;
+}
+
+.tag-stage {
+    background: #dbeafe !important;
+    color: #1d4ed8 !important;
+}
+
+.tag-category {
+    background: #f3e8ff !important;
+    color: #7e22ce !important;
+}
+
+.details-section {
+    border-top: 1px solid #ececec;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.details-section h4,
+.details-grid h4 {
+    color: #6c757d;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin: 0 0 8px 0;
+}
+
+.details-description {
+    color: #111827;
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    border-top: 1px solid #ececec;
+    padding-top: 20px;
+    margin-bottom: 20px;
+}
+
+.details-grid p {
+    color: #111827;
+    font-size: 14px;
+    margin: 0;
+}
+
+.details-footer {
+    border-top: 1px solid #ececec;
+    padding-top: 16px;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.details-footer-sep {
+    margin: 0 8px;
+}
