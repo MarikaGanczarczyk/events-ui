@@ -1,12 +1,15 @@
-import React, { useEffect, useState , useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
+import { Menu } from "primereact/menu";
+
 import CreateEvent from "./CreateEvent";
+import EditEvent from "./EditEvent";
 import { useNavigate } from "react-router-dom";
-import { Menu } from 'primereact/menu';
+
 
 
 
@@ -15,8 +18,13 @@ const EventsPage = () => {
   const menuRef = useRef(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedCriticality, setSelectedCriticality] = useState(null);
- const navigate = useNavigate();
-  
+
+  const [activeRow, setActiveRow] = useState(null);
+  const [editEventType, setEditEventType] = useState(null);
+  const [editVisible, setEditVisible] = useState(false);
+
+
+
 
   const statusOptions = [
     { label: "Active", value: true },
@@ -39,48 +47,52 @@ const EventsPage = () => {
       .catch((err) => console.log(err.message));
   }, []);
 
+  const navigate = useNavigate();
 
-
-
-const actionBodyTemplate = (rowData) => {
-  const items = [
+  const menuItems = [
     {
-      label: 'Edit',
-      icon: 'pi pi-pencil',
-      command: () => {
-       // handleEdit(rowData);
-         console.log(rowData);
-      }
+      label: "View details",
+      icon: "pi pi-eye",
+      command: () => navigate(`/events/${activeRow.eventtype}`),
     },
     {
-      label: 'Delete',
-      icon: 'pi pi-trash',
+      label: "Edit",
+      icon: "pi pi-pencil",
       command: () => {
-       // handleDelete(rowData);
-         console.log(rowData);
-      }
-    }
+        setEditEventType(activeRow.eventtype);
+        setEditVisible(true);
+      },
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => {
+        fetch("http://localhost:3001/events/" + (activeRow.id ?? activeRow.eventtype), {
+          method: "DELETE",
+        })
+          .then(() => setEvents((prev) => prev.filter((e) => e.eventtype !== activeRow.eventtype)))
+          .catch((err) => console.log(err.message));
+      },
+    },
   ];
 
-  return (
-    <>
-      <Menu model={items} popup ref={menuRef} />
+  const actionBodyTemplate = (rowData) => {
+    return (
       <Button
         icon="pi pi-ellipsis-v"
         className="action-btn"
-        onClick={(e) => menuRef.current.toggle(e)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setActiveRow(rowData);
+          menuRef.current.toggle(e);
+        }}
       />
-    </>
-  );
-};
-
-
+    );
+  };
 
 const handleEventCreated = (created) => {
   setEvents((prev) => [...prev, created]);
 };
-
-
 
   return (
     <div className="container">
@@ -138,6 +150,20 @@ const handleEventCreated = (created) => {
           <Column header="Actions" body={actionBodyTemplate} />
         </DataTable>
       </div>
+
+      <Menu model={menuItems} popup ref={menuRef} />
+
+      <EditEvent
+        visible={editVisible}
+        eventtype={editEventType}
+        onHide={() => setEditVisible(false)}
+        onSaved={(updated) => {
+          setEditVisible(false);
+          setEvents((prev) =>
+            prev.map((e) => (e.eventtype === editEventType ? updated : e))
+          );
+        }}
+      />
     </div>
   );
 };

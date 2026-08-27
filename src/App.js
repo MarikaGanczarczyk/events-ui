@@ -10,7 +10,7 @@ import EventDetails from './EventDetails';
 
 function App() {
   return (
-       <PrimeReactProvider>
+ <PrimeReactProvider>
  <BrowserRouter>
  <Routes>
   <Route path='/' element={<Dashboard/>}></Route>

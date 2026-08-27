@@ -45,6 +45,8 @@ const [isReusable, setIsReusable] = useState(false);
  const handleCreateEvent = (e) => {
   e.preventDefault();
 
+  const now = new Date().toISOString();
+
   const newEvent = {
     eventtype: eventType,
     eventdescription: description,
@@ -53,6 +55,8 @@ const [isReusable, setIsReusable] = useState(false);
     isactive: isActive ? "Y" : "N",
     criticalevent: isCritical ? "Y" : "N",
     isreusable: isReusable ? "Y" : "N",
+    createdAt: now,
+    updatedAt: now,
   };
 
   fetch("http://localhost:3001/events", {

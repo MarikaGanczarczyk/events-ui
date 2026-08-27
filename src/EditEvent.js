@@ -12,6 +12,7 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [eventId, setEventId] = useState(null);
+  const [createdAt, setCreatedAt] = useState(null);
 
   const [form, setForm] = useState({
     eventtype: "",
@@ -30,6 +31,7 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
       .then((res) => res.json())
       .then((data) => {
         setEventId(data.id ?? eventtype);
+        setCreatedAt(data.createdAt ?? null);
         setForm({
           eventtype: data.eventtype || "",
           eventdescription: data.eventdescription || "",
@@ -54,9 +56,12 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
   const handleSave = () => {
     const payload = {
       ...form,
+      eventtype,
       isactive: form.isactive ? "Y" : "N",
       criticalevent: form.criticalevent ? "Y" : "N",
       isreusable: form.isreusable ? "Y" : "N",
+      createdAt: createdAt ?? new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     };
 
     setSaving(true);
@@ -88,7 +93,7 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
             <InputText
               id="eventtype"
               value={form.eventtype}
-              onChange={(e) => updateField("eventtype", e.target.value)}
+              disabled
               placeholder="Example: Incident escalation"
             />
           </div>
