@@ -132,7 +132,7 @@ const EventDetails = () => {
         onSaved={(updated) => {
           setEditVisible(false);
           if (updated.eventtype && updated.eventtype !== eventtype) {
-            navigate(`/events/${updated.eventtype}`);
+            navigate(`/events/${updated.eventtype}`, { replace: true });
           } else {
             setEventData(updated);
           }

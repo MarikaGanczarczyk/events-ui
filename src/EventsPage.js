@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
+import { Menu } from "primereact/menu";
 
 import CreateEvent from "./CreateEvent";
+import EditEvent from "./EditEvent";
 import { useNavigate } from "react-router-dom";
 
 const EventsPage = () => {
@@ -14,7 +16,12 @@ const EventsPage = () => {
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedCriticality, setSelectedCriticality] = useState(null);
 
-  
+  const [activeRow, setActiveRow] = useState(null);
+  const [editEventType, setEditEventType] = useState(null);
+  const [editVisible, setEditVisible] = useState(false);
+  const menuRef = useRef(null);
+
+
 
   const statusOptions = [
     { label: "Active", value: true },
@@ -35,15 +42,53 @@ const EventsPage = () => {
       .catch((err) => console.log(err.message));
   }, []);
 
-  const actionBodyTemplate = () => {
-    return <Button icon="pi pi-ellipsis-v" className="action-btn" />;
+  const navigate = useNavigate();
+
+  const menuItems = [
+    {
+      label: "View details",
+      icon: "pi pi-eye",
+      command: () => navigate(`/events/${activeRow.eventtype}`),
+    },
+    {
+      label: "Edit",
+      icon: "pi pi-pencil",
+      command: () => {
+        setEditEventType(activeRow.eventtype);
+        setEditVisible(true);
+      },
+    },
+    {
+      label: "Delete",
+      icon: "pi pi-trash",
+      command: () => {
+        fetch("http://localhost:3001/events/" + (activeRow.id ?? activeRow.eventtype), {
+          method: "DELETE",
+        })
+          .then(() => setEvents((prev) => prev.filter((e) => e.eventtype !== activeRow.eventtype)))
+          .catch((err) => console.log(err.message));
+      },
+    },
+  ];
+
+  const actionBodyTemplate = (rowData) => {
+    return (
+      <Button
+        icon="pi pi-ellipsis-v"
+        className="action-btn"
+        onClick={(e) => {
+          e.stopPropagation();
+          setActiveRow(rowData);
+          menuRef.current.toggle(e);
+        }}
+      />
+    );
   };
 
 const handleEventCreated = (created) => {
   setEvents((prev) => [...prev, created]);
 };
 
-  const navigate = useNavigate();
   return (
     <div className="container">
       <div className="page-header">
@@ -93,6 +138,20 @@ const handleEventCreated = (created) => {
           <Column header="Actions" body={actionBodyTemplate} />
         </DataTable>
       </div>
+
+      <Menu model={menuItems} popup ref={menuRef} />
+
+      <EditEvent
+        visible={editVisible}
+        eventtype={editEventType}
+        onHide={() => setEditVisible(false)}
+        onSaved={(updated) => {
+          setEditVisible(false);
+          setEvents((prev) =>
+            prev.map((e) => (e.eventtype === editEventType ? updated : e))
+          );
+        }}
+      />
     </div>
   );
 };
