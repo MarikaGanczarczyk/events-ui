@@ -1,19 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef} from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { InputText } from "primereact/inputtext";
-
 import CreateEvent from "./CreateEvent";
 import { useNavigate } from "react-router-dom";
+import { Menu } from 'primereact/menu';
+
+
 
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
-
+  const menuRef = useRef(null);
   const [selectedStatus, setSelectedStatus] = useState(null);
   const [selectedCriticality, setSelectedCriticality] = useState(null);
-
+ const navigate = useNavigate();
   
 
   const statusOptions = [
@@ -25,6 +27,8 @@ const EventsPage = () => {
     { label: "Non Critical", value: false },
   ];
 
+
+
   useEffect(() => {
     fetch("http://localhost:3001/events")
       .then((res) => res.json())
@@ -35,17 +39,58 @@ const EventsPage = () => {
       .catch((err) => console.log(err.message));
   }, []);
 
-  const actionBodyTemplate = () => {
-    return <Button icon="pi pi-ellipsis-v" className="action-btn" />;
-  };
+
+
+
+const actionBodyTemplate = (rowData) => {
+  const items = [
+    {
+      label: 'Edit',
+      icon: 'pi pi-pencil',
+      command: () => {
+       // handleEdit(rowData);
+         console.log(rowData);
+      }
+    },
+    {
+      label: 'Delete',
+      icon: 'pi pi-trash',
+      command: () => {
+       // handleDelete(rowData);
+         console.log(rowData);
+      }
+    }
+  ];
+
+  return (
+    <>
+      <Menu model={items} popup ref={menuRef} />
+      <Button
+        icon="pi pi-ellipsis-v"
+        className="action-btn"
+        onClick={(e) => menuRef.current.toggle(e)}
+      />
+    </>
+  );
+};
+
+
 
 const handleEventCreated = (created) => {
   setEvents((prev) => [...prev, created]);
 };
 
-  const navigate = useNavigate();
+
+
   return (
     <div className="container">
+         <Button
+              label="Back"
+              icon="pi pi-arrow-left"
+              className="back-btn"
+              text
+              onClick={() => navigate(-1)}
+            />
       <div className="page-header">
         <h2>Events </h2>
         <p className="page-subtitle">Search and manage events</p>

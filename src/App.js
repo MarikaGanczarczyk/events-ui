@@ -1,7 +1,7 @@
 
 import './App.css';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
-
+import { PrimeReactProvider } from 'primereact/api';
 import Dashboard from './Dashboard';
 import EventsPage from './EventsPage';
 import Atributes  from './Atributes'
@@ -10,6 +10,7 @@ import EventDetails from './EventDetails';
 
 function App() {
   return (
+       <PrimeReactProvider>
  <BrowserRouter>
  <Routes>
   <Route path='/' element={<Dashboard/>}></Route>
@@ -19,6 +20,7 @@ function App() {
      <Route path='/events/:eventtype' element={<EventDetails/>}></Route>
  </Routes>
  </BrowserRouter>
+ </PrimeReactProvider>
   );
 }
 
