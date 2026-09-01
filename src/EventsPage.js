@@ -114,23 +114,7 @@ const handleEventCreated = (created) => {
           <InputText placeholder="Search even type" />
         </span>
 
-        <Dropdown
-          value={selectedStatus}
-          onChange={(e) => setSelectedStatus(e.value)}
-          options={statusOptions}
-          optionLabel="label"
-          placeholder="Status"
-          className="dropdown-filter"
-        />
-
-        <Dropdown
-          value={selectedCriticality}
-          onChange={(e) => setSelectedCriticality(e.value)}
-          options={criticalityOptions}
-          optionLabel="label"
-          placeholder="Criticality"
-          className="dropdown-filter"
-        />
+    
         <div>
           <div>
             <CreateEvent onEventCreated={handleEventCreated}/>
@@ -140,14 +124,15 @@ const handleEventCreated = (created) => {
 
       <div className="table-container">
         <DataTable value={events} className="events-table" onRowClick={(e) => navigate(`/events/${e.data.eventtype}`)}>
-          <Column field="eventtype" header="Event Type" />
-          <Column field="eventdescription" header="Description" />
-          <Column field="eventowner" header="Owner" />
-          <Column field="ipfstage" header="Stage" />
-          <Column field="isactive" header="Active" />
-          <Column field="criticalevent" header="Critical" />
-          <Column field="isreusable" header="Reusable" />
-          <Column header="Actions" body={actionBodyTemplate} />
+
+          <Column field="eventtype" header="Event Type" sortable />
+    <Column field="eventdescription" header="Description" sortable />
+    <Column field="eventowner" header="Owner" sortable />
+    <Column field="ipfstage" header="Stage" sortable />
+    <Column field="isactive" header="Active" sortable />
+    <Column field="criticalevent" header="Critical" sortable />
+    <Column field="isreusable" header="Reusable" sortable />
+    <Column header="Actions" body={actionBodyTemplate} />
         </DataTable>
       </div>
 
