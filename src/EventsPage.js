@@ -16,24 +16,12 @@ import { useNavigate } from "react-router-dom";
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const menuRef = useRef(null);
-  const [selectedStatus, setSelectedStatus] = useState(null);
-  const [selectedCriticality, setSelectedCriticality] = useState(null);
+
 
   const [activeRow, setActiveRow] = useState(null);
   const [editEventType, setEditEventType] = useState(null);
   const [editVisible, setEditVisible] = useState(false);
 
-
-
-
-  const statusOptions = [
-    { label: "Active", value: true },
-    { label: "Non Active", value: false },
-  ];
-  const criticalityOptions = [
-    { label: "Critical", value: true },
-    { label: "Non Critical", value: false },
-  ];
 
 
 
