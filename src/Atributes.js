@@ -5,6 +5,8 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Menu } from "primereact/menu";
 
+import EditAtribute from "./EditAtribute";
+
 const formatDate = (value) => {
   if (!value) return null;
   const date = new Date(value);
@@ -16,6 +18,8 @@ const Atributes = () => {
   const [attributes, setAttributes] = useState([]);
 
   const [activeRow, setActiveRow] = useState(null);
+  const [editAttributeName, setEditAttributeName] = useState(null);
+  const [editVisible, setEditVisible] = useState(false);
   const menuRef = useRef(null);
 
   useEffect(() => {
@@ -36,6 +40,10 @@ const Atributes = () => {
     {
       label: "Edit",
       icon: "pi pi-pencil",
+      command: () => {
+        setEditAttributeName(activeRow.attributename);
+        setEditVisible(true);
+      },
     },
     {
       label: "Delete",
@@ -95,6 +103,18 @@ const Atributes = () => {
       </div>
 
       <Menu model={menuItems} popup ref={menuRef} />
+
+      <EditAtribute
+        visible={editVisible}
+        attributename={editAttributeName}
+        onHide={() => setEditVisible(false)}
+        onSaved={(updated) => {
+          setEditVisible(false);
+          setAttributes((prev) =>
+            prev.map((a) => (a.attributename === editAttributeName ? updated : a))
+          );
+        }}
+      />
     </div>
   );
 };
