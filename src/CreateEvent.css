@@ -48,7 +48,7 @@
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 0.75rem;
+  gap: 0rem;
   margin-top: 1.5rem;
   padding-top: 1rem;
   border-top: 1px solid #e5e7eb;
@@ -57,7 +57,7 @@
 
 
 .new-event-btn {
-margin-left: auto;
+margin-left: 5px;
 background: #2563EB;
 border: 1px solid #2563EB;
 border-radius: 8px;
@@ -65,6 +65,8 @@ color: white;
 font-size: 14px;
 font-weight: 500;
 padding: 12px 30px;
+width: 150px;
+height: 48px;
 }
 
 .new-event-btn:hover {
@@ -79,6 +81,8 @@ color: white;
 font-size: 14px;
 font-weight: 500;
 padding: 12px 30px;
+width: 150px;
+height: 48px;
 }
 .cancel-btn:hover{
 background: #753a3a;

@@ -126,11 +126,12 @@ background-color: #f8fafc !important;
     gap: 10px;
     align-items: center;
     margin-bottom: 10px ;
+  
 }
 .new-event-btn {
 margin-left: auto;
-background: #2563EB;
-border: 1px solid #2563EB;
+background:#325A99;
+border: 1px solid #325A99;
 border-radius: 8px;
 color: white;
 font-size: 14px;
