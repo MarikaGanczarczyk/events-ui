@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 
 import "./EditEvent.css";
 
-const EditAtribute = ({ visible, attributename, onHide, onSaved }) => {
+const EditAttribute = ({ visible, attributename, onHide, onSaved }) => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [attributeId, setAttributeId] = useState(null);
@@ -103,4 +103,4 @@ const EditAtribute = ({ visible, attributename, onHide, onSaved }) => {
   )
 }
 
-export default EditAtribute
+export default EditAttribute

@@ -5,7 +5,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Menu } from "primereact/menu";
 
-import EditAtribute from "./EditAtribute";
+import EditAttribute from "./EditAttribute";
 
 const formatDate = (value) => {
   if (!value) return null;
@@ -14,7 +14,7 @@ const formatDate = (value) => {
   return date.toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric" });
 };
 
-const Atributes = () => {
+const Attributes = () => {
   const [attributes, setAttributes] = useState([]);
 
   const [activeRow, setActiveRow] = useState(null);
@@ -104,7 +104,7 @@ const Atributes = () => {
 
       <Menu model={menuItems} popup ref={menuRef} />
 
-      <EditAtribute
+      <EditAttribute
         visible={editVisible}
         attributename={editAttributeName}
         onHide={() => setEditVisible(false)}
@@ -119,4 +119,4 @@ const Atributes = () => {
   );
 };
 
-export default Atributes;
+export default Attributes;

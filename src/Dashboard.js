@@ -54,7 +54,7 @@ const navigate = useNavigate();
           value={totalAttributes}
           icon="pi pi-book"
           subtext={attributesSubtext}
-          onClick={() => navigate("/atributes")}
+          onClick={() => navigate("/attributes")}
         />
         <StatCard
           label="TOTAL CATEGORIES"
