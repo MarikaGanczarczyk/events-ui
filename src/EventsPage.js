@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-import { Dropdown } from "primereact/dropdown";
+import { eventsApi } from "./Api";
 import { InputText } from "primereact/inputtext";
 import { Menu } from "primereact/menu";
 
@@ -26,14 +26,10 @@ const EventsPage = () => {
 
 
   useEffect(() => {
-    fetch("http://localhost:3001/events")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setEvents(data);
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
+  eventsApi.getAll()
+    .then((res) => setEvents(res.data))
+    .catch((err) => console.log(err.message));
+}, []);
 
   const navigate = useNavigate();
 
@@ -51,17 +47,16 @@ const EventsPage = () => {
         setEditVisible(true);
       },
     },
-    {
-      label: "Delete",
-      icon: "pi pi-trash",
-      command: () => {
-        fetch("http://localhost:3001/events/" + (activeRow.id ?? activeRow.eventtype), {
-          method: "DELETE",
-        })
-          .then(() => setEvents((prev) => prev.filter((e) => e.eventtype !== activeRow.eventtype)))
-          .catch((err) => console.log(err.message));
-      },
-    },
+   {
+  label: "Delete",
+  icon: "pi pi-trash",
+  command: () => {
+    eventsApi
+      .delete(activeRow.id ?? activeRow.eventtype)
+      .then(() => setEvents((prev) => prev.filter((e) => e.eventtype !== activeRow.eventtype)))
+      .catch((err) => console.log(err.message));
+  },
+},
   ];
 
   const actionBodyTemplate = (rowData) => {

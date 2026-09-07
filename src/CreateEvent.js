@@ -4,7 +4,7 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Dropdown } from 'primereact/dropdown';
-
+import { eventsApi } from './Api';
 import { Checkbox } from "primereact/checkbox";
 import  './CreateEvent.css'
 
@@ -59,21 +59,15 @@ const [isReusable, setIsReusable] = useState(false);
     updatedAt: now,
   };
 
-  fetch("http://localhost:3001/events", {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(newEvent),
-  })
-    .then((res) => res.json())
-    .then((created) => {
-      onEventCreated?.(created); 
-      setVisible(false);
-      resetForm();
-    })
-    .catch((err) => console.log(err.message));
-};
+    eventsApi
+      .create(newEvent)
+      .then((response) => {
+        onEventCreated?.(response.data);
+        setVisible(false);
+        resetForm();
+      })
+      .catch((err) => console.log(err.message));
+  };
 
   return (
     <>

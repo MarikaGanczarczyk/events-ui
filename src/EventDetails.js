@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
+import axios from "axios";
+import { eventsApi } from './Api';
 
 import EditEvent from "./EditEvent";
 import "./EventDetail.css";
@@ -22,27 +24,24 @@ const EventDetails = () => {
   const { eventtype } = useParams();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoading(true);
-    fetch("http://localhost:3001/events/" + eventtype)
-      .then((res) => res.json())
-      .then((data) => {
-        setEventData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setLoading(false);
-      });
-  }, [eventtype]);
-
-  const handleDelete = () => {
-    fetch("http://localhost:3001/events/" + (eventData?.id ?? eventtype), {
-      method: "DELETE",
+useEffect(() => {
+  setLoading(true);
+  eventsApi.getOne(eventtype)
+    .then((response) => {
+      setEventData(response.data);
+      setLoading(false);
     })
-      .then(() => navigate("/events"))
-      .catch((err) => console.log(err.message));
-  };
+    .catch((err) => {
+      console.log(err.message);
+      setLoading(false);
+    });
+}, [eventtype]);
+
+const handleDelete = () => {
+  eventsApi.delete(eventData?.id ?? eventtype)
+    .then(() => navigate("/events"))
+    .catch((err) => console.log(err.message));
+};
 
   if (loading) {
     return (

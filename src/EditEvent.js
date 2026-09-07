@@ -3,7 +3,7 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-
+import { eventsApi } from './Api';
 import "./EditEvent.css";
 
 const isYes = (value) => value === "Y" || value === true || value === 1;
@@ -24,12 +24,13 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
     isreusable: false,
   });
 
-  useEffect(() => {
+ useEffect(() => {
     if (!visible) return;
     setLoading(true);
-    fetch("http://localhost:3001/events/" + eventtype)
-      .then((res) => res.json())
-      .then((data) => {
+    eventsApi
+      .getOne(eventtype)
+      .then((response) => {
+        const data = response.data;
         setEventId(data.id ?? eventtype);
         setCreatedAt(data.createdAt ?? null);
         setForm({
@@ -64,18 +65,13 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
       updatedAt: new Date().toISOString(),
     };
 
-    setSaving(true);
-    fetch("http://localhost:3001/events/" + (eventId ?? eventtype), {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    })
-      .then((res) => res.json())
-      .then((data) => onSaved(data))
+   setSaving(true);
+    eventsApi
+      .update(eventId ?? eventtype, payload)
+      .then((response) => onSaved(response.data))
       .catch((err) => console.log(err.message))
       .finally(() => setSaving(false));
   };
-
   return (
     <Dialog
       header="Update event"
