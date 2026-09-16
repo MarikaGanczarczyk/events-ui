@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-
+import { attributesApi } from './Api';
 import "./EditEvent.css";
 
 const EditAttribute = ({ visible, attributename, onHide, onSaved }) => {
@@ -17,26 +17,27 @@ const EditAttribute = ({ visible, attributename, onHide, onSaved }) => {
     datatype: "",
   });
 
-  useEffect(() => {
-    if (!visible) return;
-    setLoading(true);
-    fetch("http://localhost:3001/attributes/" + attributename)
-      .then((res) => res.json())
-      .then((data) => {
-        setAttributeId(data.id ?? attributename);
-        setCreateddate(data.createddate ?? null);
-        setLastupdatedby(data.lastupdatedby ?? null);
-        setForm({
-          attributename: data.attributename || "",
-          datatype: data.datatype || "",
-        });
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err.message);
-        setLoading(false);
+ useEffect(() => {
+  if (!visible) return;
+  setLoading(true);
+  attributesApi
+    .getOne(attributename)
+    .then((response) => {
+      const data = response.data;
+      setAttributeId(data.id ?? attributename);
+      setCreateddate(data.createddate ?? null);
+      setLastupdatedby(data.lastupdatedby ?? null);
+      setForm({
+        attributename: data.attributename || "",
+        datatype: data.datatype || "",
       });
-  }, [visible, attributename]);
+      setLoading(false);
+    })
+    .catch((err) => {
+      console.log(err.message);
+      setLoading(false);
+    });
+}, [visible, attributename]);
 
   const updateField = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
 

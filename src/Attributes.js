@@ -6,6 +6,7 @@ import { InputText } from "primereact/inputtext";
 import { Menu } from "primereact/menu";
 
 import EditAttribute from "./EditAttribute";
+import { attributesApi } from "./Api";
 
 const formatDate = (value) => {
   if (!value) return null;
@@ -22,16 +23,11 @@ const Attributes = () => {
   const [editVisible, setEditVisible] = useState(false);
   const menuRef = useRef(null);
 
-  useEffect(() => {
-    fetch("http://localhost:3001/attributes")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setAttributes(data);
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
-
+ useEffect(() => {
+  attributesApi.getAll()
+    .then((res) => setAttributes(res.data))
+    .catch((err) => console.log(err.message));
+}, []);
   const menuItems = [
     {
       label: "View details",
@@ -45,19 +41,18 @@ const Attributes = () => {
         setEditVisible(true);
       },
     },
-    {
-      label: "Delete",
-      icon: "pi pi-trash",
-      command: () => {
-        fetch("http://localhost:3001/attributes/" + (activeRow.id ?? activeRow.attributename), {
-          method: "DELETE",
-        })
-          .then(() =>
-            setAttributes((prev) => prev.filter((a) => a.attributename !== activeRow.attributename))
-          )
-          .catch((err) => console.log(err.message));
-      },
-    },
+   {
+  label: "Delete",
+  icon: "pi pi-trash",
+  command: () => {
+    attributesApi
+      .delete(activeRow.id ?? activeRow.attributename)
+      .then(() =>
+        setAttributes((prev) => prev.filter((a) => a.attributename !== activeRow.attributename))
+      )
+      .catch((err) => console.log(err.message));
+  },
+},
   ];
 
   const createdBodyTemplate = (rowData) => formatDate(rowData.createddate) || "—";
