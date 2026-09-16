@@ -1,0 +1,361 @@
+{
+  "uuid": "a7d8ac40-46d1-4ef7-a16a-fbd1daf2e136",
+  "lastMigration": 33,
+  "name": "Event Management API",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 3001,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "30f58f62-42c5-4a41-9b59-2fce480986bc",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "events",
+      "responses": [
+        {
+          "uuid": "2af7df95-6d7e-423c-a4b6-c7ed7bd4a7d0",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "kxkr",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "eventtype",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "621f0a69-314e-408c-95d2-b199aade1780",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "events",
+      "responses": [
+        {
+          "uuid": "d9bea016-d816-4ef7-beab-062f84be6120",
+          "body": "{{data 'events'}}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "4fca58fd-d4c3-45cd-8178-e191f5c80160",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "events/:eventtype",
+      "responses": [
+        {
+          "uuid": "ff06a0ff-4f60-44e6-9fe5-f801388e1fa2",
+          "body": "{\r\n  \"eventtype\": \"{{urlParam 'eventtype'}}\"\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "72d6ad49-12e7-450f-80d4-b5b3a3a600bc",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "events",
+      "responses": [
+        {
+          "uuid": "4b80510b-d105-4435-a454-ddcfa582855b",
+          "body": "{{setData 'events' (push (data 'events') (body))}}\n{\"message\": \"Event created successfully\"}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "e8764848-bdb4-4e04-8f8a-9ab87db81cf9",
+      "type": "http",
+      "documentation": "",
+      "method": "put",
+      "endpoint": "events/:eventtype",
+      "responses": [
+        {
+          "uuid": "9120a796-f072-45a1-a210-4c9ec308ed9d",
+          "body": "{\r\n  \"message\": \"Event updated successfully\"\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "6eaf53c1-5515-4632-b3e0-c33f4edc4670",
+      "type": "http",
+      "documentation": "",
+      "method": "delete",
+      "endpoint": "events/:eventtype",
+      "responses": [
+        {
+          "uuid": "dd3508d5-933c-48df-a301-fdddb4c31b48",
+          "body": "{\r\n  \"message\": \"Event deleted successfully\"\r\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "0d2f889a-3b1b-45ee-ba0f-57feffb98cd2",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "attributes",
+      "responses": [
+        {
+          "uuid": "44b66c6f-65d3-40e4-94cd-7435f0503bf1",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "nb0t",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "attributename",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "47511ca6-8f6f-4876-8741-34c45a3a5a34",
+      "type": "crud",
+      "documentation": "",
+      "method": "",
+      "endpoint": "categories",
+      "responses": [
+        {
+          "uuid": "ef45cce4-8f0d-41fd-a023-8e38d7ffaf02",
+          "body": "{}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "",
+          "headers": [],
+          "bodyType": "DATABUCKET",
+          "filePath": "",
+          "databucketID": "g3sb",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "category",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "30f58f62-42c5-4a41-9b59-2fce480986bc"
+    },
+    {
+      "type": "route",
+      "uuid": "621f0a69-314e-408c-95d2-b199aade1780"
+    },
+    {
+      "type": "route",
+      "uuid": "4fca58fd-d4c3-45cd-8178-e191f5c80160"
+    },
+    {
+      "type": "route",
+      "uuid": "72d6ad49-12e7-450f-80d4-b5b3a3a600bc"
+    },
+    {
+      "type": "route",
+      "uuid": "e8764848-bdb4-4e04-8f8a-9ab87db81cf9"
+    },
+    {
+      "type": "route",
+      "uuid": "6eaf53c1-5515-4632-b3e0-c33f4edc4670"
+    },
+    {
+      "type": "route",
+      "uuid": "0d2f889a-3b1b-45ee-ba0f-57feffb98cd2"
+    },
+    {
+      "type": "route",
+      "uuid": "47511ca6-8f6f-4876-8741-34c45a3a5a34"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Content-Type",
+      "value": "application/json"
+    },
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [
+    {
+      "uuid": "adf4b90f-bb02-4d6b-a61e-c9f19795326f",
+      "id": "kxkr",
+      "name": "events",
+      "documentation": "",
+      "value": "[\r\n  { \"eventtype\": \"Login\",\r\n  \"eventdescription\": \"User authentication event\",\r\n  \"eventowner\": \"Security\", \r\n  \"isactive\": \"Y\",\r\n  \"criticalevent\": \"Y\",\r\n  \"isreusable\": \"N\",\r\n  \"ipfstage\": \"Live\" },\r\n  \r\n  { \"eventtype\": \"Purchase\",\r\n  \"eventdescription\": \"Completed checkout\",\r\n  \"eventowner\": \"Commerce\",\r\n  \"isactive\": \"Y\",\r\n  \"criticalevent\": \"Y\",\r\n  \"isreusable\": \"Y\",\r\n  \"ipfstage\": \"Live\" },\r\n  \r\n  { \"eventtype\": \"PageView\",\r\n  \"eventdescription\": \"Page visit tracked\",\r\n  \"eventowner\": \"Analytics\",\r\n  \"isactive\": \"Y\",\r\n  \"criticalevent\": \"N\",\r\n  \"isreusable\": \"Y\",\r\n  \"ipfstage\": \"Draft\" },\r\n  \r\n   { \"eventtype\": \"Example1\",\r\n  \"eventdescription\": \"Page visit tracked\",\r\n  \"eventowner\": \"Analytics\",\r\n  \"isactive\": \"Y\",\r\n  \"criticalevent\": \"N\",\r\n  \"isreusable\": \"Y\",\r\n  \"ipfstage\": \"Draft\" },\r\n  \r\n   { \"eventtype\": \"Example2\",\r\n  \"eventdescription\": \"Page visit tracked\",\r\n  \"eventowner\": \"Analytics\",\r\n  \"isactive\": \"Y\",\r\n  \"criticalevent\": \"N\",\r\n  \"isreusable\": \"Y\",\r\n  \"ipfstage\": \"Draft\" },\r\n  \r\n   { \"eventtype\": \"Example3\",\r\n  \"eventdescription\": \"Page visit tracked\",\r\n  \"eventowner\": \"Analytics\",\r\n  \"isactive\": \"Y\",\r\n  \"criticalevent\": \"N\",\r\n  \"isreusable\": \"Y\",\r\n  \"ipfstage\": \"Draft\" }\r\n]"
+    },
+    {
+      "uuid": "08f59b2f-1de9-41a1-8be4-68d3cfb665f5",
+      "id": "nb0t",
+      "name": "attributes",
+      "documentation": "",
+      "value": "[\n  {\n    \"attributename\": \"Priority\",\n    \"datatype\": \"String\",\n    \"lastupdatedby\": \"jsmith\",\n    \"updateddate\": \"2026-07-15T10:30:00Z\",\n    \"createddate\": \"2026-01-10T09:00:00Z\"\n  },\n  {\n    \"attributename\": \"Severity\",\n    \"datatype\": \"String\",\n    \"lastupdatedby\": \"mjones\",\n    \"updateddate\": \"2026-07-20T14:15:00Z\",\n    \"createddate\": \"2026-01-12T09:00:00Z\"\n  },\n  {\n    \"attributename\": \"DueDate\",\n    \"datatype\": \"Date\",\n    \"lastupdatedby\": \"jsmith\",\n    \"updateddate\": \"2026-06-01T08:45:00Z\",\n    \"createddate\": \"2026-01-15T09:00:00Z\"\n  },\n  {\n    \"attributename\": \"AssignedTo\",\n    \"datatype\": \"String\",\n    \"lastupdatedby\": \"akowalski\",\n    \"updateddate\": \"2026-08-01T11:20:00Z\",\n    \"createddate\": \"2026-02-01T09:00:00Z\"\n  },\n  {\n    \"attributename\": \"IsCompleted\",\n    \"datatype\": \"Boolean\",\n    \"lastupdatedby\": \"mjones\",\n    \"updateddate\": \"2026-08-10T16:00:00Z\",\n    \"createddate\": \"2026-02-05T09:00:00Z\"\n  },\n  {\n    \"attributename\": \"Score\",\n    \"datatype\": \"Number\",\n    \"lastupdatedby\": \"jsmith\",\n    \"updateddate\": \"2026-07-28T13:10:00Z\",\n    \"createddate\": \"2026-03-01T09:00:00Z\"\n  }\n]"
+    },
+    {
+      "uuid": "ed718f65-3892-4808-ad33-815c20d484f7",
+      "id": "g3sb",
+      "name": "categories",
+      "documentation": "",
+      "value": "[\n  {\n    \"category\": \"Financial\",\n    \"domain\": \"FIN\",\n    \"owner\": \"jsmith\"\n  },\n  {\n    \"category\": \"Operational\",\n    \"domain\": \"OPS\",\n    \"owner\": \"mjones\"\n  },\n  {\n    \"category\": \"Compliance\",\n    \"domain\": \"CMP\",\n    \"owner\": \"akowalski\"\n  },\n  {\n    \"category\": \"Risk\",\n    \"domain\": \"RSK\",\n    \"owner\": \"jsmith\"\n  },\n  {\n    \"category\": \"Strategic\",\n    \"domain\": \"STR\",\n    \"owner\": \"mjones\"\n  }\n]"
+    }
+  ],
+  "callbacks": []
+}
