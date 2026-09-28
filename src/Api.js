@@ -14,7 +14,7 @@ export const eventsApi = {
   getAll: () => api.get("/events"),
 
   // GET /events/:eventtype  
-  getOne: (eventtype) => api.get(`/events/${eventtype}`),
+  getOne: (eventType) => api.get(`/events/${eventType}`),
 
   // POST /events
   create: (newEvent) => api.post("/events", newEvent),

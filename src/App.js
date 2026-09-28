@@ -16,7 +16,7 @@ function App() {
           <Route path="/events" element={<EventsPage />}></Route>
           <Route path="/attributes" element={<Attributes />}></Route>
           <Route path="/categories" element={<Categories />}></Route>
-          <Route path="/events/:eventtype" element={<EventDetails />}></Route>
+          <Route path="/events/:eventType" element={<EventDetails />}></Route>
         </Routes>
       </BrowserRouter>
     </PrimeReactProvider>

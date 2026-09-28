@@ -12,18 +12,13 @@ import { useNavigate } from "react-router-dom";
 
 
 
-
 const EventsPage = () => {
   const [events, setEvents] = useState([]);
   const menuRef = useRef(null);
 
-
   const [activeRow, setActiveRow] = useState(null);
   const [editEventType, setEditEventType] = useState(null);
   const [editVisible, setEditVisible] = useState(false);
-
-
-
 
   useEffect(() => {
   eventsApi.getAll()
@@ -37,13 +32,13 @@ const EventsPage = () => {
     {
       label: "View details",
       icon: "pi pi-eye",
-      command: () => navigate(`/events/${activeRow.eventtype}`),
+      command: () => navigate(`/events/${activeRow.eventType}`),
     },
     {
       label: "Edit",
       icon: "pi pi-pencil",
       command: () => {
-        setEditEventType(activeRow.eventtype);
+        setEditEventType(activeRow.eventType);
         setEditVisible(true);
       },
     },
@@ -52,8 +47,8 @@ const EventsPage = () => {
   icon: "pi pi-trash",
   command: () => {
     eventsApi
-      .delete(activeRow.id ?? activeRow.eventtype)
-      .then(() => setEvents((prev) => prev.filter((e) => e.eventtype !== activeRow.eventtype)))
+      .delete(activeRow.id ?? activeRow.eventType)
+      .then(() => setEvents((prev) => prev.filter((e) => e.eventType !== activeRow.eventType)))
       .catch((err) => console.log(err.message));
   },
 },
@@ -97,7 +92,6 @@ const handleEventCreated = (created) => {
           <InputText placeholder="Search even type" />
         </span>
 
-    
         <div>
           <div>
             <CreateEvent onEventCreated={handleEventCreated}/>
@@ -106,15 +100,16 @@ const handleEventCreated = (created) => {
       </div>
 
       <div className="table-container">
-        <DataTable value={events} className="events-table" onRowClick={(e) => navigate(`/events/${e.data.eventtype}`)}>
 
-          <Column field="eventtype" header="Event Type" sortable />
-    <Column field="eventdescription" header="Description" sortable />
-    <Column field="eventowner" header="Owner" sortable />
-    <Column field="ipfstage" header="Stage" sortable />
-    <Column field="isactive" header="Active" sortable />
-    <Column field="criticalevent" header="Critical" sortable />
-    <Column field="isreusable" header="Reusable" sortable />
+        <DataTable value={events} className="events-table" onRowClick={(e) => navigate(`/events/${e.data.eventType}`)}>
+
+          <Column field="eventType" header="Event Type" sortable />
+    <Column field="eventDescription" header="Description" sortable />
+    <Column field="eventOwner" header="Owner" sortable />
+    <Column field="gifStage" header="Stage" sortable />
+    <Column field="isActive" header="Active" sortable />
+    <Column field="critical" header="Critical" sortable />
+    <Column field="isReusable" header="Reusable" sortable />
     <Column header="Actions" body={actionBodyTemplate} />
         </DataTable>
       </div>
@@ -128,12 +123,11 @@ const handleEventCreated = (created) => {
         onSaved={(updated) => {
           setEditVisible(false);
           setEvents((prev) =>
-            prev.map((e) => (e.eventtype === editEventType ? updated : e))
+            prev.map((e) => (e.eventType === editEventType ? updated : e))
           );
         }}
       />
     </div>
   );
 };
-
 export default EventsPage;

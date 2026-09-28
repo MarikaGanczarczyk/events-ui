@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from "primereact/button";
 import { Tag } from "primereact/tag";
-import axios from "axios";
+
+
 import { eventsApi } from './Api';
 
 import EditEvent from "./EditEvent";
@@ -21,12 +22,12 @@ const EventDetails = () => {
   const [eventData, setEventData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editVisible, setEditVisible] = useState(false);
-  const { eventtype } = useParams();
+  const { eventType } = useParams();
   const navigate = useNavigate();
 
 useEffect(() => {
   setLoading(true);
-  eventsApi.getOne(eventtype)
+  eventsApi.getOne(eventType)
     .then((response) => {
       setEventData(response.data);
       setLoading(false);
@@ -35,10 +36,10 @@ useEffect(() => {
       console.log(err.message);
       setLoading(false);
     });
-}, [eventtype]);
+}, [eventType]);
 
 const handleDelete = () => {
-  eventsApi.delete(eventData?.id ?? eventtype)
+  eventsApi.delete(eventData?.id ?? eventType)
     .then(() => navigate("/events"))
     .catch((err) => console.log(err.message));
 };
@@ -51,7 +52,7 @@ const handleDelete = () => {
     );
   }
 
-  if (!eventData || !eventData.eventtype) {
+  if (!eventData || !eventData.eventType) {
     return (
       <div className="container">
         <p className="details-status">Event not found.</p>
@@ -59,8 +60,8 @@ const handleDelete = () => {
     );
   }
 
-  const created = formatDate(eventData.createdAt);
-  const updated = formatDate(eventData.updatedAt);
+  const created = formatDate(eventData.createdDate);
+  const updated = formatDate(eventData.updatedDate);
 
   return (
     <div className="container">
@@ -80,34 +81,34 @@ const handleDelete = () => {
           </div>
         </div>
 
-        <p className="details-title">{eventData.eventtype}</p>
+        <p className="details-title">{eventData.eventType}</p>
 
         <div className="details-tags">
           <Tag
-            value={isYes(eventData.isactive) ? "Enabled" : "Disabled"}
-            className={isYes(eventData.isactive) ? "tag-enabled" : "tag-neutral"}
+            value={isYes(eventData.isActive) ? "Enabled" : "Disabled"}
+            className={isYes(eventData.isActive) ? "tag-enabled" : "tag-neutral"}
           />
           <Tag
-            value={isYes(eventData.criticalevent) ? "High priority" : "Normal priority"}
-            className={isYes(eventData.criticalevent) ? "tag-priority" : "tag-neutral"}
+            value={isYes(eventData.critical) ? "High priority" : "Normal priority"}
+            className={isYes(eventData.critical) ? "tag-priority" : "tag-neutral"}
           />
           <Tag
-            value={isYes(eventData.isreusable) ? "Reusable" : "Single use"}
+            value={isYes(eventData.isReusable) ? "Reusable" : "Single use"}
             className="tag-neutral"
           />
-          <Tag value={`Stage: ${eventData.ipfstage || "—"}`} className="tag-stage" />
+          <Tag value={`Stage: ${eventData.gifStage || "—"}`} className="tag-stage" />
           <Tag value={`Category: ${eventData.category || "General"}`} className="tag-category" />
         </div>
 
         <div className="details-section">
           <h4>Description</h4>
-          <p className="details-description">{eventData.eventdescription || "No description provided."}</p>
+          <p className="details-description">{eventData.eventDescription || "No description provided."}</p>
         </div>
 
         <div className="details-grid">
           <div>
             <h4>Owner</h4>
-            <p>{eventData.eventowner || "—"}</p>
+            <p>{eventData.eventOwner || "—"}</p>
           </div>
           <div>
             <h4>Attribute</h4>
@@ -126,12 +127,12 @@ const handleDelete = () => {
 
       <EditEvent
         visible={editVisible}
-        eventtype={eventtype}
+        eventtype={eventType}
         onHide={() => setEditVisible(false)}
         onSaved={(updated) => {
           setEditVisible(false);
-          if (updated.eventtype && updated.eventtype !== eventtype) {
-            navigate(`/events/${updated.eventtype}`, { replace: true });
+          if (updated.eventType && updated.eventType !== eventType) {
+            navigate(`/events/${updated.eventType}`, { replace: true });
           } else {
             setEventData(updated);
           }
