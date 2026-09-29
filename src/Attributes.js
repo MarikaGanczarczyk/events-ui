@@ -37,7 +37,7 @@ const Attributes = () => {
       label: "Edit",
       icon: "pi pi-pencil",
       command: () => {
-        setEditAttributeName(activeRow.attributename);
+        setEditAttributeName(activeRow.attributeName);
         setEditVisible(true);
       },
     },
@@ -46,17 +46,17 @@ const Attributes = () => {
   icon: "pi pi-trash",
   command: () => {
     attributesApi
-      .delete(activeRow.id ?? activeRow.attributename)
+      .delete( activeRow.attributeName)
       .then(() =>
-        setAttributes((prev) => prev.filter((a) => a.attributename !== activeRow.attributename))
+        setAttributes((prev) => prev.filter((a) => a.attributeName !== activeRow.attributeName))
       )
       .catch((err) => console.log(err.message));
   },
 },
   ];
 
-  const createdBodyTemplate = (rowData) => formatDate(rowData.createddate) || "—";
-  const updatedBodyTemplate = (rowData) => formatDate(rowData.updateddate) || "—";
+  const createdBodyTemplate = (rowData) => formatDate(rowData.createdDate) || "—";
+  const updatedBodyTemplate = (rowData) => formatDate(rowData.updatedDate) || "—";
 
   const actionBodyTemplate = (rowData) => {
     return (
@@ -88,11 +88,11 @@ const Attributes = () => {
 
       <div className="table-container">
         <DataTable value={attributes} className="attributes-table">
-          <Column field="attributename" header="Attribute Name" sortable />
-          <Column field="datatype" header="Data Type" sortable />
-          <Column field="createddate" header="Created" body={createdBodyTemplate} sortable />
-          <Column field="updateddate" header="Last Updated" body={updatedBodyTemplate} sortable />
-          <Column field="lastupdatedby" header="Updated By" sortable />
+          <Column field="attributeName" header="Attribute Name" sortable />
+          <Column field="dataType" header="Data Type" sortable />
+          <Column field="createdDate" header="Created" body={createdBodyTemplate} sortable />
+          <Column field="updatedDate" header="Last Updated" body={updatedBodyTemplate} sortable />
+          <Column field="lastUpdatedBy" header="Updated By" sortable />
           <Column header="Actions" body={actionBodyTemplate} />
         </DataTable>
       </div>
@@ -101,12 +101,12 @@ const Attributes = () => {
 
       <EditAttribute
         visible={editVisible}
-        attributename={editAttributeName}
+        attributeName={editAttributeName}
         onHide={() => setEditVisible(false)}
         onSaved={(updated) => {
           setEditVisible(false);
           setAttributes((prev) =>
-            prev.map((a) => (a.attributename === editAttributeName ? updated : a))
+            prev.map((a) => (a.attributeName === editAttributeName ? updated : a))
           );
         }}
       />

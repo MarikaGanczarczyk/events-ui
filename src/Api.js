@@ -32,7 +32,7 @@ export const attributesApi = {
     getAll: () => api.get("/attributes"),
 
     //GET /attributes/:attributename
-    getOne: (attributename) => api.get(`/attributes/${attributename}`),
+    getOne: (attributeName) => api.get(`/attributes/${attributeName}`),
 
      // POST /attributes
   create: (newAttribute) => api.post("/attributes", newAttribute),

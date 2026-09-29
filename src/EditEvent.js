@@ -8,39 +8,30 @@ import "./EditEvent.css";
 
 const isYes = (value) => value === "Y" || value === true || value === 1;
 
-const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
+const EditEvent = ({ visible, eventType, onHide, onSaved }) => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [eventId, setEventId] = useState(null);
   const [createdAt, setCreatedAt] = useState(null);
 
   const [form, setForm] = useState({
-    eventtype: "",
-    eventdescription: "",
-    eventowner: "",
-    ipfstage: "",
-    isactive: false,
-    criticalevent: false,
-    isreusable: false,
+  eventType: "", eventDescription: "", eventOwner: "", gifStage: "", isActive: false, critical: false, isReusable: false,
   });
 
  useEffect(() => {
     if (!visible) return;
+
     setLoading(true);
+
     eventsApi
-      .getOne(eventtype)
+      .getOne(eventType)
       .then((response) => {
         const data = response.data;
-        setEventId(data.id ?? eventtype);
+
+        setEventId(data.id ?? eventType);
         setCreatedAt(data.createdAt ?? null);
         setForm({
-          eventtype: data.eventtype || "",
-          eventdescription: data.eventdescription || "",
-          eventowner: data.eventowner || "",
-          ipfstage: data.ipfstage || "",
-          isactive: isYes(data.isactive),
-          criticalevent: isYes(data.criticalevent),
-          isreusable: isYes(data.isreusable),
+        eventType: data.eventType || "", eventDescription: data.eventDescription || "", eventOwner: data.eventOwner || "", gifStage: data.gifStage || "", isActive: isYes(data.isActive), critical: isYes(data.critical), isReusable: isYes(data.isReusable),
         });
         setLoading(false);
       })
@@ -48,7 +39,7 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
         console.log(err.message);
         setLoading(false);
       });
-  }, [visible, eventtype]);
+  }, [visible, eventType]);
 
   const updateField = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
 
@@ -57,17 +48,17 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
   const handleSave = () => {
     const payload = {
       ...form,
-      eventtype,
-      isactive: form.isactive ? "Y" : "N",
-      criticalevent: form.criticalevent ? "Y" : "N",
-      isreusable: form.isreusable ? "Y" : "N",
+      eventType,
+      isActive: form.isActive ? "Y" : "N",
+      critical: form.critical ? "Y" : "N",
+      isReusable: form.isReusable ? "Y" : "N",
       createdAt: createdAt ?? new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
    setSaving(true);
     eventsApi
-      .update(eventId ?? eventtype, payload)
+      .update(eventId ?? eventType, payload)
       .then((response) => onSaved(response.data))
       .catch((err) => console.log(err.message))
       .finally(() => setSaving(false));
@@ -88,7 +79,7 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
             <label htmlFor="eventtype">Event type *</label>
             <InputText
               id="eventtype"
-              value={form.eventtype}
+              value={form.eventType}
               disabled
               placeholder="Example: Incident escalation"
             />
@@ -98,7 +89,7 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
             <label htmlFor="eventdescription">Description</label>
             <InputTextarea
               id="eventdescription"
-              value={form.eventdescription}
+              value={form.eventDescription}
               onChange={(e) => updateField("eventdescription", e.target.value)}
               rows={3}
               placeholder="Describe when this event should be used."
@@ -110,7 +101,7 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
               <label htmlFor="eventowner">Owner</label>
               <InputText
                 id="eventowner"
-                value={form.eventowner}
+                value={form.eventOwner}
                 onChange={(e) => updateField("eventowner", e.target.value)}
                 placeholder="Select team"
               />
@@ -120,7 +111,7 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
               <label htmlFor="ipfstage">IPF stage</label>
               <InputText
                 id="ipfstage"
-                value={form.ipfstage}
+                value={form.gifStage}
                 onChange={(e) => updateField("ipfstage", e.target.value)}
                 placeholder="Select stage"
               />
@@ -130,17 +121,17 @@ const EditEvent = ({ visible, eventtype, onHide, onSaved }) => {
           <div className="toggle-row">
             <Button
               label="Enabled"
-              className={form.isactive ? "toggle-btn toggle-active" : "toggle-btn"}
+              className={form.isActive ? "toggle-btn toggle-active" : "toggle-btn"}
               onClick={() => toggleField("isactive")}
             />
             <Button
               label="High priority"
-              className={form.criticalevent ? "toggle-btn toggle-priority" : "toggle-btn"}
+              className={form.critical ? "toggle-btn toggle-priority" : "toggle-btn"}
               onClick={() => toggleField("criticalevent")}
             />
             <Button
               label="Reusable"
-              className={form.isreusable ? "toggle-btn toggle-reusable" : "toggle-btn"}
+              className={form.isReusable ? "toggle-btn toggle-reusable" : "toggle-btn"}
               onClick={() => toggleField("isreusable")}
             />
           </div>

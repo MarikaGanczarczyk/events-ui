@@ -5,55 +5,66 @@ import { InputText } from "primereact/inputtext";
 import { attributesApi } from './Api';
 import "./EditEvent.css";
 
-const EditAttribute = ({ visible, attributename, onHide, onSaved }) => {
+const EditAttribute = ({ visible, attributeName, onHide, onSaved }) => {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [attributeId, setAttributeId] = useState(null);
-  const [createddate, setCreateddate] = useState(null);
-  const [lastupdatedby, setLastupdatedby] = useState(null);
+  const [createdDate, setCreatedDate] = useState(null);
+  const [lastUpdatedBy, setLastUpdatedBy] = useState(null);
 
   const [form, setForm] = useState({
-    attributename: "",
-    datatype: "",
+    attributeName: "",
+    dataType: "",
   });
 
- useEffect(() => {
-  if (!visible) return;
-  setLoading(true);
-  attributesApi
-    .getOne(attributename)
-    .then((response) => {
-      const data = response.data;
-      setAttributeId(data.id ?? attributename);
-      setCreateddate(data.createddate ?? null);
-      setLastupdatedby(data.lastupdatedby ?? null);
-      setForm({
-        attributename: data.attributename || "",
-        datatype: data.datatype || "",
-      });
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.log(err.message);
-      setLoading(false);
-    });
-}, [visible, attributename]);
+  useEffect(() => {
+    if (!visible) return;
 
-  const updateField = (field, value) => setForm((prev) => ({ ...prev, [field]: value }));
+    setLoading(true);
+
+    attributesApi
+      .getOne(attributeName)
+      .then((response) => {
+        const data = response.data;
+
+        setCreatedDate(data.createdDate ?? null);
+        setLastUpdatedBy(data.lastUpdatedBy ?? null);
+
+        setForm({
+          attributeName: data.attributeName || "",
+          dataType: data.dataType || "",
+        });
+
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setLoading(false);
+      });
+  }, [visible, attributeName]);
+
+  const updateField = (field, value) => {
+    setForm((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   const handleSave = () => {
     const payload = {
       ...form,
-      attributename,
-      createddate: createddate ?? new Date().toISOString(),
-      updateddate: new Date().toISOString(),
-      lastupdatedby: lastupdatedby ?? "",
+      attributeName,
+      createdDate: createdDate ?? new Date().toISOString(),
+      updatedDate: new Date().toISOString(),
+      lastUpdatedBy: lastUpdatedBy ?? "",
     };
 
     setSaving(true);
-    fetch("http://localhost:3001/attributes/" + (attributeId ?? attributename), {
+
+    fetch("http://localhost:3001/attributes/" + attributeName, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify(payload),
     })
       .then((res) => res.json())
@@ -66,42 +77,64 @@ const EditAttribute = ({ visible, attributename, onHide, onSaved }) => {
     <Dialog
       header="Update attribute"
       visible={visible}
-      style={{ width: '50vw' }}
+      style={{ width: "50vw" }}
       onHide={onHide}
       className="edit-event-dialog"
     >
       {loading ? (
-        <p className="details-status">Loading attribute...</p>
+        <p className="details-status">
+          Loading attribute...
+        </p>
       ) : (
         <>
           <div className="form-field">
-            <label htmlFor="attributename">Attribute name *</label>
+            <label htmlFor="attributeName">
+              Attribute name *
+            </label>
+
             <InputText
-              id="attributename"
-              value={form.attributename}
+              id="attributeName"
+              value={form.attributeName}
               disabled
               placeholder="Example: customer_id"
             />
           </div>
 
           <div className="form-field">
-            <label htmlFor="datatype">Data type</label>
+            <label htmlFor="dataType">
+              Data type
+            </label>
+
             <InputText
-              id="datatype"
-              value={form.datatype}
-              onChange={(e) => updateField("datatype", e.target.value)}
+              id="dataType"
+              value={form.dataType}
+              onChange={(e) =>
+                updateField("dataType", e.target.value)
+              }
               placeholder="Example: String"
             />
           </div>
 
           <div className="form-actions">
-            <Button label="Cancel" severity="secondary" outlined onClick={onHide} />
-            <Button label="Save" className="save-btn" loading={saving} onClick={handleSave} />
+            <Button
+              label="Cancel"
+              severity="secondary"
+              outlined
+              onClick={onHide}
+            />
+
+            <Button
+              label="Save"
+              className="save-btn"
+              loading={saving}
+              onClick={handleSave}
+            />
           </div>
         </>
       )}
     </Dialog>
-  )
-}
+  );
+};
+
 
 export default EditAttribute
