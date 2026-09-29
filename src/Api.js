@@ -43,4 +43,22 @@ export const attributesApi = {
   // DELETE /attributes/:id
   delete: (id) => api.delete(`/attributes/${id}`),
 }
+export const categoriesApi = {
+  //GET /categories
+  getAll: ()=> api.get("/categories"), 
+
+  // GET /categories/:category
+  getOne: (category) => api.get(`/categories/${encodeURIComponent(category)}`),
+
+  // POST /categories
+  create: (newCategory) => api.post("/categories", newCategory),
+
+  // PUT /categories/:category
+  update: (category, payload) =>
+    api.put(`/categories/${encodeURIComponent(category)}`, payload),
+
+  // DELETE /categories/:category
+  delete: (category) =>
+    api.delete(`/categories/${encodeURIComponent(category)}`),
+}
 export default api;

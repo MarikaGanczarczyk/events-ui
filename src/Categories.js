@@ -7,6 +7,7 @@ import { InputText } from "primereact/inputtext";
 import { Menu } from "primereact/menu";
 import CreateCategory from "./CreateCategory";
 import EditCategory from "./EditCategory";
+import { categoriesApi } from "./Api";
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -16,14 +17,14 @@ const Categories = () => {
   const [editVisible, setEditVisible] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/categories")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setCategories(data);
-      })
-      .catch((err) => console.log(err.message));
-  }, []);
+  categoriesApi
+    .getAll()
+    .then((res) => {
+      console.log(res.data);
+      setCategories(res.data);
+    })
+    .catch((err) => console.log(err.message));
+}, []);
 
   const navigate = useNavigate();
 
@@ -45,19 +46,14 @@ const Categories = () => {
       label: "Delete",
       icon: "pi pi-trash",
       command: () => {
-        fetch(
-          "http://localhost:3001/categories/" +
-            (activeRow.id ?? activeRow.category),
-          {
-            method: "DELETE",
-          },
-        )
-          .then(() =>
-            setCategories((prev) =>
-              prev.filter((c) => c.category !== activeRow.category),
-            ),
-          )
-          .catch((err) => console.log(err.message));
+       categoriesApi
+  .delete(activeRow.category)
+  .then(() => {
+    setCategories((prev) =>
+      prev.filter((c) => c.category !== activeRow.category),
+    );
+  })
+  .catch((err) => console.log(err.message));
       },
     },
   ];
